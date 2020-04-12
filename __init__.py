@@ -145,8 +145,10 @@ def UltimateTrimAlign(props):
     elif props.scale == 'FIT_BOTH':
       scaleX = (trimRight - trimLeft) / size.width
       scaleY = (trimTop - trimBottom) / size.height
-    elif props.scale == 'SET_X':
+    elif props.scale == 'SET_X' or props.scale == 'SET_XY':
       scaleX = props.size_x / size.width
+    elif props.scale == 'SET_Y' or props.scale == 'SET_XY':
+      scaleY = props.size_y / size.height
       
     #print("Scale: ", scaleX, scaleY)
       
@@ -199,8 +201,9 @@ class UltimateTrimUVProps(bpy.types.PropertyGroup):
   
   h_align: bpy.props.EnumProperty(name = "Horizontal Alignment", items=[('NONE', "None", ""), ('LEFT', "Left", ""), ('CENTER', "Center", ""), ('RIGHT', "Right", "")])
   v_align: bpy.props.EnumProperty(name = "Vertical Alignment", default='TOP', items=[('NONE', "None", ""), ('TOP', "Top", ""), ('CENTER', "Center", ""), ('BOTTOM', "Bottom", "")])
-  scale: bpy.props.EnumProperty(name = "Scale", items=[('NONE', "None", ""), ('FIT_X', "Fit X", ""), ('FIT_Y', "Fit Y", ""), ('FIT_BOTH', "Fit Both", ""), ('SET_X', "Set X", "")])  
+  scale: bpy.props.EnumProperty(name = "Scale", items=[('NONE', "None", ""), ('FIT_X', "Fit X", ""), ('FIT_Y', "Fit Y", ""), ('FIT_BOTH', "Fit Both", ""), ('SET_X', "Set X", ""), ('SET_Y', "Set Y", ""), ('SET_XY', "Set XY", "")])  
   size_x: bpy.props.FloatProperty(name = "Size X", default = 1.0)
+  size_y: bpy.props.FloatProperty(name = "Size Y", default = 1.0)
   
 class IMAGE_OP_Ultimate_Trim_Align(bpy.types.Operator):
     """Aligns selected UV Island(s) to given trim index"""
@@ -244,6 +247,7 @@ class IMAGE_PT_Ultimate_Trim_UV(bpy.types.Panel):
         layout.prop(props, "v_align", text="V Align")
         layout.prop(props, "scale", text="Scale")
         layout.prop(props, "size_x", text="Size X")
+        layout.prop(props, "size_y", text="Size Y")
         layout.operator("uv.trim_align")
 
 classes = {
