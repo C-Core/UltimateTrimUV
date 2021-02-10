@@ -145,9 +145,12 @@ def UltimateTrimAlign(props):
     elif props.scale == 'FIT_BOTH':
       scaleX = (trimRight - trimLeft) / size.width
       scaleY = (trimTop - trimBottom) / size.height
-    elif props.scale == 'SET_X' or props.scale == 'SET_XY':
+    elif props.scale == 'SET_X':
       scaleX = props.size_x / size.width
-    elif props.scale == 'SET_Y' or props.scale == 'SET_XY':
+    elif props.scale == 'SET_Y':
+      scaleY = props.size_y / size.height
+    elif props.scale == 'SET_XY':
+      scaleX = props.size_x / size.width
       scaleY = props.size_y / size.height
       
     #print("Scale: ", scaleX, scaleY)
