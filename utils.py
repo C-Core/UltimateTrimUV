@@ -39,6 +39,6 @@ def InitBMesh():
 
 def update():
     """Update mesh in blender."""
-    bmesh.update_edit_mesh(bpy.context.edit_object.data, False, False)
+    bmesh.update_edit_mesh(bpy.context.edit_object.data, loop_triangles=False, destructive=False)
     # bm.to_mesh(bpy.context.object.data)
     # bm.free()
