@@ -142,3 +142,27 @@ class Island:
                 ys = yt * scaleY
                 loop[global_def.bm.loops.layers.uv.active].uv.x = xs + center.x
                 loop[global_def.bm.loops.layers.uv.active].uv.y = ys + center.y
+
+    def EdgeBBox(self):
+        bbox = self.BBox()
+        bboxHeight = bbox.top() - bbox.bottom()
+
+        avgYs = [0,0,0,0]
+        sumYs = [0,0,0,0]
+
+        for face_id in self.faceList:
+            face = global_def.bm.faces[face_id]
+            for loop in face.loops:
+                u, v = loop[global_def.uvlayer].uv
+                relY = (v - bbox.bottom()) / bboxHeight
+                if abs(relY - 0.5) > 0.05:
+                    yIndex = round(relY * 3)
+                    avgYs[yIndex] += v
+                    sumYs[yIndex] += 1
+
+        for i in range(4):
+            avgYs[i] /= sumYs[i]
+            #print(i, ":", avgYs[i])
+
+        return geometry.Rectangle(mathutils.Vector((bbox.left(), avgYs[1])),
+                                  mathutils.Vector((bbox.right(), avgYs[2])))
