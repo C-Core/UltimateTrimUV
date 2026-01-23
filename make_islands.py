@@ -47,7 +47,7 @@ class MakeIslands:
                 vert_to_faces[vertID].add(face.index)
 
                 if face.select:
-                    if loop[self.__uvlayer].select:
+                    if loop.uv_select_vert:
                         self.__selectedIslands.add(face.index)
                 else:
                     self.__hiddenFaces.add(face.index)
