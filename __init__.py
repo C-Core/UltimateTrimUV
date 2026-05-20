@@ -63,6 +63,29 @@ trimSets = {
     TrimDef('S', 96.0, 256.0, 256.0, 96.0),
     TrimDef('S', 96.0, 512.0, 512.0, 96.0),
   ],
+  "UltimateTrim2":[
+    TrimDef('D', 384.0, 512.0, 0.0, 1024.0),
+    TrimDef('D', 384.0, 384.0, 512.0, 1024.0),
+    TrimDef('D', 384.0, 128.0, 896.0, 1024.0),
+    TrimDef('A', 128.0),
+    TrimDef('B', 128.0),
+    TrimDef('A', 64.0),
+    TrimDef('B', 64.0),
+    TrimDef('C', 64.0),
+    TrimDef('A', 32.0),
+    TrimDef('B', 32.0),
+    TrimDef('A', 16.0),
+    TrimDef('B', 16.0),
+    TrimDef('S', 96.0, 96.0, 0.0, 96.0),
+    TrimDef('S', 32.0, 32.0, 96.0, 96.0),
+    TrimDef('S', 32.0, 32.0, 96.0, 32.0),
+    TrimDef('S', 96.0, 96.0, 128.0, 96.0),
+    TrimDef('S', 96.0, 32.0, 224.0, 96.0),
+    TrimDef('S', 96.0, 192.0, 256.0, 96.0),
+    TrimDef('S', 96.0, 192.0, 448.0, 96.0),
+    TrimDef('S', 96.0, 192.0, 640.0, 96.0),
+    TrimDef('S', 96.0, 192.0, 832.0, 96.0),
+  ],
   "Edges":[
     TrimDef('A',  6.0, 1024.0, 0.0, 960.0 + 3.0),
     TrimDef('B',  6.0, 1024.0, 0.0, 832.0 + 3.0),
@@ -91,6 +114,8 @@ def AdjustTrimDefs():
       if trim.y_offset < 0.0:
         trim.y_offset = currentYOffset
         currentYOffset -= trim.height
+      else:
+        currentYOffset = trim.y_offset - trim.height
 
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 def DistanceToAABB(point, aabbMin, aabbMax):
