@@ -64,11 +64,26 @@ trimSets = {
     TrimDef('S', 96.0, 512.0, 512.0, 96.0),
   ],
   "UltimateTrim2":[
-    TrimDef('D', 384.0, 512.0, 0.0, 1024.0),
-    TrimDef('D', 384.0, 384.0, 512.0, 1024.0),
-    TrimDef('D', 384.0, 128.0, 896.0, 1024.0),
+    TrimDef('D', 512.0, 256.0, 0.0, 2048.0),
+    TrimDef('D', 128.0, 768.0, 256.0, 2048.0),
+    TrimDef('D', 384.0, 256.0, 256.0, 2048.0 - 128.0),
+    TrimDef('D', 256.0, 256.0, 512.0, 2048.0 - 128.0),
+    TrimDef('D', 128.0, 128.0, 768.0, 2048.0 - 256.0),
+    TrimDef('D', 256.0, 256.0, 768.0, 2048.0 - 128.0),
+    TrimDef('D', 256.0, 512.0, 0.0, 2048.0 - 512.0),
+    TrimDef('D', 384.0, 128.0, 512.0, 2048.0 - 384.0),
+    TrimDef('D', 384.0, 256.0, 640.0, 2048.0 - 384.0),
+    TrimDef('D', 384.0, 256.0, 768.0, 2048.0 - 384.0),
+    TrimDef('D', 512.0, 512.0, 0.0, 2048.0 - 768.0),
+    TrimDef('D', 512.0, 128.0, 512.0, 2048.0 - 768.0),
+    TrimDef('D', 256.0, 256.0, 640.0, 2048.0 - 768.0),
+    TrimDef('D', 256.0, 256.0, 768.0, 2048.0 - 768.0),
+    TrimDef('D', 256.0, 256.0, 640.0, 2048.0 - 1024.0),
+    TrimDef('D', 128.0, 128.0, 896.0, 2048.0 - 1024.0),
+    TrimDef('D', 128.0, 256.0, 768.0, 2048.0 - 1152.0),
     TrimDef('A', 128.0),
     TrimDef('B', 128.0),
+    TrimDef('C', 128.0),
     TrimDef('A', 64.0),
     TrimDef('B', 64.0),
     TrimDef('C', 64.0),
@@ -102,14 +117,19 @@ currentTrimDefs = []
 
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 def AdjustTrimDefs():
-  currentYOffset = 1.0
-
   for set in trimSets.values():
+    currentYOffset = 1.0
+    width = 1024.0
+    height = 1024.0
+
     for trim in set:
-      trim.height /= 1024.0
-      trim.width /= 1024.0
-      trim.x_offset /= 1024.0
-      trim.y_offset /= 1024.0
+      if trim.y_offset > height:
+        height = trim.y_offset
+      
+      trim.width /= width
+      trim.height /= height
+      trim.x_offset /= width
+      trim.y_offset /= height
     
       if trim.y_offset < 0.0:
         trim.y_offset = currentYOffset
