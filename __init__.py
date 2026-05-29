@@ -172,7 +172,8 @@ def UltimateTrimAlign(props):
   global currentTrimDefs
   currentTrimDefs = trimSets[props.trim_set]
 
-  padding = props.uv_padding / float(props.trim_res)
+  paddingX = props.uv_padding / float(props.trim_res_x)
+  paddingY = props.uv_padding / float(props.trim_res_y)
   
   #Creates UV islands out of the selected elements
   makeIslands = make_islands.MakeIslands()
@@ -183,12 +184,12 @@ def UltimateTrimAlign(props):
   
     trimDef = currentTrimDefs[props.trim_index] if props.trim_index >= 0 else FindBestMatch(island, props.trim_variants)
   
-    trimLeft = trimDef.x_offset + padding 
-    trimRight = trimDef.x_offset + trimDef.width - padding
+    trimLeft = trimDef.x_offset + paddingX
+    trimRight = trimDef.x_offset + trimDef.width - paddingX
     trimHCenter = trimDef.x_offset + trimDef.width * 0.5
   
-    trimTop = trimDef.y_offset - padding
-    trimBottom = trimDef.y_offset - trimDef.height + padding
+    trimTop = trimDef.y_offset - paddingY
+    trimBottom = trimDef.y_offset - trimDef.height + paddingY
     trimVCenter = trimDef.y_offset - trimDef.height * 0.5
   
     #print("Trim:", trimLeft, trimRight, trimTop, trimBottom)
@@ -292,7 +293,7 @@ class UltimateTrimUVProps(bpy.types.PropertyGroup):
     name = "Trim Set"
   )
 
-  trim_res: bpy.props.EnumProperty(
+  trim_res_x: bpy.props.EnumProperty(
     items = [
         ('256', '256', ''),
         ('512', '512', ''),
@@ -300,7 +301,19 @@ class UltimateTrimUVProps(bpy.types.PropertyGroup):
         ('2048', '2048',''),
         ('4096', '4096',''),
         ('8192', '8192','')],
-    name = "Trim Resolution",
+    name = "Trim Resolution X",
+    default = "2048"
+  )
+
+  trim_res_y: bpy.props.EnumProperty(
+    items = [
+        ('256', '256', ''),
+        ('512', '512', ''),
+        ('1024', '1024',''),
+        ('2048', '2048',''),
+        ('4096', '4096',''),
+        ('8192', '8192','')],
+    name = "Trim Resolution Y",
     default = "2048"
   )
 
@@ -381,7 +394,8 @@ class IMAGE_PT_Ultimate_Trim_UV(bpy.types.Panel):
         layout = self.layout
         
         layout.prop(props, "trim_set", text="Trim Set")
-        layout.prop(props, "trim_res", text="Trim Resolution")
+        layout.prop(props, "trim_res_x", text="Trim Res X")
+        layout.prop(props, "trim_res_y", text="Trim Res Y")
         layout.prop(props, "uv_padding", text="UV Padding")
         layout.prop(props, "trim_index", text="Trim Index")
         layout.prop(props, "trim_variants", text="Variants")
